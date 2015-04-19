@@ -46,13 +46,6 @@ def dataNormalization(numpyArray):
 		for j in range(len(numpyArray))]
 	return numpyArray
 
-# -----
-
-
-# To test the program execution
-numpyArray = readFileData()
-
-
 
 
 
