@@ -4,12 +4,13 @@
 
 import fileProcessing as fp
 import numpy as np
+import matplotlib.pyplot
+# --- Activitat 2 --- #
 
-# --- Activitat 1  --- #
 rawData = fp.readFileData()
 normalised = fp.dataNormalization(rawData)
-print("The number of components needed for the 95% variance acceptance is: ", 
-	fp.pcaComponentsCalc(normalised))
 
+projection = fp.pcaWithComponents(normalised, 2)
 
-
+matplotlib.pyplot.scatter(projection[:,0],projection[:,1],marker='o')
+matplotlib.pyplot.show()
