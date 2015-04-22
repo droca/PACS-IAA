@@ -21,15 +21,39 @@ def readFileData(filename="Wholesale customers.csv"):
 		lines = list(map(lambda l: [int(i) for i in (l.strip().split(","))],
 			dades.readlines()))
 
-	# Elimination of the frist two values, which are useless for us right now
-	# TODO: improve this part
-	for i in lines:
-		i.pop(0)
-		i.pop(0)
-	
-	lines = np.array(lines)
-
 	return lines
+
+# Extracts the channel of the data array
+# The first element of each row is the value of the channel
+# Returns an array with all the channels
+def channelsExtraction(array):
+	channels = []
+	for i in array:
+		channels.append(i[0])
+
+	return channels
+
+# Extracts the region of the data array
+# The second element of each row is the value of the region
+# Returns an array with all the regions
+def regionsExtraction(array):
+	regions = []
+	for i in array:
+		regions.append(i[1])
+
+	return regions
+
+# Removes the channel & the region values from the array
+def arrayCleanup(array):
+	for i in array:
+		i.pop(0)
+		i.pop(0)
+	return array
+
+# Converts a normal array into a numpy array
+def convertToNumpyArray(array):
+	array = np.array(array)
+	return array
 
 # Calculate mean of the provided numpy array values
 def meanCalculation(numpyArray):
@@ -42,7 +66,9 @@ def stdDeviationCalculation(numpyArray):
 	return stdDev
 
 # Data normalisation
-def dataNormalization(numpyArray):
+def dataNormalization(array):
+	array = arrayCleanup(array)
+	numpyArray = convertToNumpyArray(array)
 	mean = meanCalculation(numpyArray)
 	stdDev = stdDeviationCalculation(numpyArray)
 	numpyArray = [list(map(lambda i: (i - mean[j]) / stdDev[j], numpyArray[j]))
@@ -50,7 +76,9 @@ def dataNormalization(numpyArray):
 	return numpyArray
 
 # Calculation of how many components are needed to achieve the 95% variance
-def pcaComponentsCalc(numpyArray):
+def pcaComponentsCalc(array):
+
+	numpyArray = dataNormalization(array)
 	# New PCA class instance
 	pca = PCA()
 	# With all components
@@ -72,7 +100,10 @@ def pcaComponentsCalc(numpyArray):
 	return np.where(progress==numberComps)[0][0]
 
 # Calculate the pca with the number of components passed as parameter
-def pcaWithComponents(numpyArray, numComponents):
+def pcaWithComponents(array, numComponents):
+
+	numpyArray = dataNormalization(array)
+
 	pca = PCA(n_components=numComponents)
 	pca.fit(numpyArray)
 
