@@ -4,6 +4,7 @@
 
 import numpy as np
 from sklearn.decomposition import PCA
+from sklearn.manifold import MDS
 
 
 # Creates a matrix with all the values for all customers
@@ -112,5 +113,16 @@ def pcaWithComponents(array, numComponents):
 	projection = pca.transform(numpyArray)
 
 	return projection
+
+# MDS
+def mdsComputation(array):
+	numpyArray = dataNormalization(array)
+
+	mds = MDS(dissimilarity='euclidean')
+	fig = mds.fit_transform(numpyArray)
+
+	return fig
+
+
 
 

@@ -31,13 +31,13 @@ plt.scatter(projection[:,1],projection[:,2],marker='o',c=regions)
 
 # Figure representation, using the third and fourth components
 # We represent the figure where the channels are colored differently
-fig1 = plt.figure()
-fig1.canvas.set_window_title('Components 3 & 4. Color by channels')
+fig3 = plt.figure()
+fig3.canvas.set_window_title('Components 3 & 4. Color by channels')
 plt.scatter(projection[:,2],projection[:,3],marker='o',c=channels)
 
 # We represent the figure where the regions are colored differenttly
-fig2 = plt.figure()
-fig2.canvas.set_window_title('Components 3 & 4. Color by regions')
+fig4 = plt.figure()
+fig4.canvas.set_window_title('Components 3 & 4. Color by regions')
 plt.scatter(projection[:,2],projection[:,3],marker='o',c=regions)
 
 
