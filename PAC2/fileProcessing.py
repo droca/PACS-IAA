@@ -7,11 +7,9 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import MDS
 
 
-# Creates a matrix with all the values for all customers
+# Creates an array with all the values for all customers
 # We are assuming that the first line of the source file is a header that contains
 # no important data for the study
-# We are also assuming that the first two values of each line also don't have
-# important value
 
 def readFileData(filename="Wholesale customers.csv"):
 
