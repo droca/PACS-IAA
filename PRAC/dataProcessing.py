@@ -25,9 +25,6 @@ def stdDeviationCalculation(numpyArray):
 
 # Data normalisation, knowing the mean and the stdDev
 def dataNormalization(array, mean=None, stdDev=None):
-	#array = arrayCleanup(array)
-	# I'm not sure of this step, since we are already working with numpy arrays
-	# numpyArray = convertToNumpyArray(array)
 	if (mean==None): 	mean = meanCalculation(array)
 	if (stdDev==None): stdDev = stdDeviationCalculation(array)
 	for i in range(len(array)):
@@ -35,33 +32,37 @@ def dataNormalization(array, mean=None, stdDev=None):
 	return array
 
 # Calculation of how many components are needed to achieve the 95% variance
-def pcaComponentsCalc(array):
+def pcaComponentsCalc(numpyArray):
 
-	numpyArray = dataNormalization(array)
 	# New PCA class instance
 	pca = PCA()
-	# With all components
 	pca.fit(numpyArray)
 
 	# Sum of the variances for each component
 	# With this progression we can see clearly how many components
 	# do we need to achieve the 95% of acceptance
+	# If that percentage cannot be reached, it returns nothing
 	progress = [sum(pca.explained_variance_ratio_[:i]) 
-		for i in range(len(pca.explained_variance_ratio_))]
+		for i in range(len(pca.explained_variance_ratio_)+1)]
 
 	print("Progression of components and '%' of acceptance: ")
 	print(list(zip(range(len(progress)), progress)))
-
+	
 	# Actually return the number of components needed for the 95% variance
-	for numberComps in progress:
-		if numberComps >= 0.95:
+	for i in progress:
+		if i >= 0.95:
 			break
-	return np.where(progress==numberComps)[0][0]
+
+	if i >= 0.95:
+		compNumber = where(progress==i)[0][0]
+		print ("The number of components needed for the 95% is: ", compNumber)
+		return compNumber
+	else:
+		print("The 95% of confidence cannot be reached with this data")
+		return
 
 # Calculate the pca with the number of components passed as parameter
-def pcaWithComponents(array, numComponents):
-
-	numpyArray = dataNormalization(array)
+def pcaWithComponents(numpyArray, numComponents):
 
 	pca = PCA(n_components=numComponents)
 	pca.fit(numpyArray)
