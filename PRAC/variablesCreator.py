@@ -15,6 +15,9 @@ GENERATION={
 	'ERROR':'Error in generation'
 }
 
+# ------------------------------------------------------- #
+# Methods used in exercici1 #
+# ------------------------------------------------------- #
 
 # Builds a matrix concatenating the 4 arrays
 def buildMatrix(ar1, ar2, ar3, ar4):
@@ -68,6 +71,13 @@ def createVariableExpAndSum(name, number, constant, array1, array2):
 		raise
 	return x
 
+# ------------------------------------------------------- #
+# Methods used in exercici2 #
+# ------------------------------------------------------- #
 
+# Generate data for normal distribution, multivariada 2D
+def createBidimensionalVariable(mean, cov, obsNumber):
+ biVar = random.multivariate_normal(mean,cov,obsNumber)
+ return biVar
 
 
